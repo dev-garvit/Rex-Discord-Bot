@@ -298,5 +298,71 @@ async def toggle_antinuke(ctx):
     status = "enabled" if config['antinuke']['enabled'] else "disabled"
     await ctx.send(f"Antinuke {status}.")
 
+# Panel Command
+@bot.slash_command(name="panel", description="Displays the bot's command panel")
+async def panel(ctx):
+    embed = discord.Embed(
+        title="🤖 Bot Command Panel",
+        description="Here's a list of all available commands organized by category. Use the slash commands or prefix commands as shown.",
+        color=0x00ff00
+    )
+    
+    # Autorole
+    embed.add_field(
+        name="🔑 Autorole",
+        value="`!set_autorole @Role` - Set the role to auto-assign to new members",
+        inline=False
+    )
+    
+    # Moderation Commands
+    embed.add_field(
+        name="🛡️ Moderation",
+        value="`!ban @user [reason]` - Ban a member\n"
+              "`!kick @user [reason]` - Kick a member\n"
+              "`!timeout @user duration [reason]` - Timeout a member (in minutes)\n"
+              "`!mute @user [reason]` - Mute a member (requires 'Muted' role)\n"
+              "`!unban user_id` - Unban a user by ID\n"
+              "`!unmute @user` - Unmute a member\n"
+              "`!remove_timeout @user` - Remove timeout from a member",
+        inline=False
+    )
+    
+    # Greeting Setup
+    embed.add_field(
+        name="👋 Greeting Messages",
+        value="`!set_greeting #channel message` - Set greeting message for new members\n"
+              "*Use {user} in the message to mention the new member*",
+        inline=False
+    )
+    
+    # Antinuke and Antiraid
+    embed.add_field(
+        name="🛡️ Antinuke & Antiraid",
+        value="`!toggle_antinuke` - Enable/disable antinuke protection\n"
+              "*Automatically detects and prevents mass destructive actions*",
+        inline=False
+    )
+    
+    # Automod
+    embed.add_field(
+        name="🤖 Automod",
+        value="`!toggle_automod` - Enable/disable automod\n"
+              "`!add_banned_word word` - Add a word to the banned list\n"
+              "*Automatically filters banned words and detects spam*",
+        inline=False
+    )
+    
+    # Logging System
+    embed.add_field(
+        name="📝 Logging",
+        value="`!set_logs #channel` - Set the channel for logging events\n"
+              "*Logs member joins/leaves, role changes, voice updates, and moderation actions*",
+        inline=False
+    )
+    
+    embed.set_footer(text="Note: Most commands require administrator or specific permissions. Use /panel to view this again.")
+    
+    await ctx.respond(embed=embed)
+
 # Run the bot
 bot.run('YOUR_BOT_TOKEN_HERE')
